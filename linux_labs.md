@@ -341,7 +341,7 @@ df -h
 
 ### Automating mounting
 
-Automatically enabling swap
+Adding UUIDs to `fstab` for mount on boot
 
 ```sh
 blkid | grep <partition> >> /etc/fstab
