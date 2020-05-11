@@ -1,6 +1,21 @@
-# Linux labs
+# Linux labs <!-- omit in toc -->
 
 Summary of commands of the Rangeforce labs.
+
+- [Users](#users)
+  - [User data](#user-data)
+  - [User passwords](#user-passwords)
+  - [User groups](#user-groups)
+- [Files](#files)
+  - [Managing files and folders](#managing-files-and-folders)
+  - [File and folder permissions](#file-and-folder-permissions)
+  - [Special permissions](#special-permissions)
+  - [File and folder ownership](#file-and-folder-ownership)
+- [Disks](#disks)
+  - [Partition creation](#partition-creation)
+  - [Swap area](#swap-area)
+  - [Partition mounting](#partition-mounting)
+  - [Automating mounting](#automating-mounting)
 
 ## Users
 
@@ -166,7 +181,7 @@ find <path> -name '*<match>*' -exec mv {} <dest_path> \;
 
 ### File and folder permissions
 
-Managing file  folder permissions
+Managing file folder permissions
 
 ```sh
 chmod <permsint> <target>
@@ -239,7 +254,7 @@ To display all existing block devices
 lsblk
 ```
 
-To *select* a disk
+To _select_ a disk
 
 ```sh
 fdisk [disk]
