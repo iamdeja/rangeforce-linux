@@ -1,4 +1,55 @@
-# Introduction to cybersecurity
+# Introduction to cybersecurity <!-- omit in toc -->
+
+- [Concepts](#concepts)
+  - [Information security](#information-security)
+    - [Availability](#availability)
+    - [Integrity](#integrity)
+    - [Confidentiality](#confidentiality)
+  - [Security of data](#security-of-data)
+  - [Standard model of harm](#standard-model-of-harm)
+  - [Security and planned residual risk](#security-and-planned-residual-risk)
+    - [Acceptable residual risk](#acceptable-residual-risk)
+  - [Security threats](#security-threats)
+    - [Classification](#classification)
+    - [Threats classified by source](#threats-classified-by-source)
+- [Attacks](#attacks)
+  - [Sources of attacks](#sources-of-attacks)
+  - [Channels of attack](#channels-of-attack)
+  - [Attack classifications](#attack-classifications)
+    - [Physical attacks](#physical-attacks)
+    - [Mis-use of resources](#mis-use-of-resources)
+    - [Blocking of resources](#blocking-of-resources)
+    - [Interception](#interception)
+    - [Fabrication](#fabrication)
+    - [System manipulation](#system-manipulation)
+    - [Attacks to security mechanisms](#attacks-to-security-mechanisms)
+    - [Attacks via software](#attacks-via-software)
+- [Vulnerabilities](#vulnerabilities)
+  - [Infrastructure related vulnerabilities](#infrastructure-related-vulnerabilities)
+  - [IT related vulnerabilities](#it-related-vulnerabilities)
+  - [Personnel related vulnerabilities](#personnel-related-vulnerabilities)
+  - [Organisational vulnerabilities](#organisational-vulnerabilities)
+  - [Interaction between threats and vulnerabilities](#interaction-between-threats-and-vulnerabilities)
+- [Digital data](#digital-data)
+  - [Securing digital data](#securing-digital-data)
+  - [Role of cryptography](#role-of-cryptography)
+  - [Availability of digital data](#availability-of-digital-data)
+  - [Integrity of digital data](#integrity-of-digital-data)
+  - [Confidentiality of digital data](#confidentiality-of-digital-data)
+- [Safegurads](#safegurads)
+  - [Classification of safeguards](#classification-of-safeguards)
+  - [Purpose divided safeguards](#purpose-divided-safeguards)
+    - [Preventive safeguards](#preventive-safeguards)
+  - [Identifying safeguards](#identifying-safeguards)
+    - [Operative identification](#operative-identification)
+    - [Post-event identification](#post-event-identification)
+    - [Evidence-based identification](#evidence-based-identification)
+  - [Reconstructive safeguards](#reconstructive-safeguards)
+  - [Classification by IT assets](#classification-by-it-assets)
+  - [Classification by implementation](#classification-by-implementation)
+    - [Organisational safeguards](#organisational-safeguards)
+    - [Physical safeguards](#physical-safeguards)
+    - [IT-related safeguards](#it-related-safeguards)
 
 ## Concepts
 
@@ -82,11 +133,11 @@ Generally the first two classifications are used.
 
 Threats classified by source can be separated in two groups:
 
-##### Spontaneous or accidental threats
+##### Spontaneous or accidental threats <!-- omit in toc -->
 
 such as environmental threats (Force Majeure), technical failures or human error,
 
-##### Deliberate acts or attacks
+##### Deliberate acts or attacks <!-- omit in toc -->
 
 in case the damage is intentional or the motives are clear.
 
@@ -191,7 +242,7 @@ The main attack targets are authentication systems and cryptosystems.
 - undocumented features of legitimate software
 - special purpose software
 
-##### Malware
+##### Malware <!-- omit in toc -->
 
 - logical bombs
 - trojan horses
@@ -311,7 +362,7 @@ Preventive safeguards are used to prevent security incidents such as
 
 Preventive safeguards can further be divided into three subcategories
 
-##### Reinforcable safeguards
+##### Reinforcable safeguards <!-- omit in toc -->
 
 which have the purpose of minimising the impact of spontaneous threats
 
@@ -320,11 +371,11 @@ which have the purpose of minimising the impact of spontaneous threats
 - preventive checks (verification and testing, monitoring, auditing)
 - security awareness (training of employees, security drills, ...)
 
-##### Deterring / scaring safeguards
+##### Deterring / scaring safeguards <!-- omit in toc -->
 
 which have the purpose of minimising the probability of attack attempts,
 
-##### Separative safeguards
+##### Separative safeguards <!-- omit in toc -->
 
 which fend off the attacks by taking care of different security aspects. They can further be divided into
 
