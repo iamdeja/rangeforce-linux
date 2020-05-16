@@ -1,5 +1,7 @@
 # Introduction to cybersecurity <!-- omit in toc -->
 
+> Note: _pdf version in document root may not be up to date_
+
 - [Concepts](#concepts)
   - [Information security](#information-security)
     - [Availability](#availability)
