@@ -1,6 +1,6 @@
 # Introduction to cybersecurity <!-- omit in toc -->
 
-> Note: _pdf version in document root may not be up to date_
+> Note: _pdf version may not be up to date_
 
 - [Concepts](#concepts)
   - [Information security](#information-security)
@@ -52,6 +52,18 @@
     - [Organisational safeguards](#organisational-safeguards)
     - [Physical safeguards](#physical-safeguards)
     - [IT-related safeguards](#it-related-safeguards)
+- [Risk management](#risk-management)
+- [Symmetric cryptoalgorithms](#symmetric-cryptoalgorithms)
+  - [Role of symmetric keys](#role-of-symmetric-keys)
+  - [Fields of use of symmetric cryptoalgorithms](#fields-of-use-of-symmetric-cryptoalgorithms)
+  - [Major symmetric cryptoalgorithms](#major-symmetric-cryptoalgorithms)
+  - [Block and stream ciphers](#block-and-stream-ciphers)
+  - [Inner structure of block ciphers](#inner-structure-of-block-ciphers)
+    - [Main basic operations inside rounds](#main-basic-operations-inside-rounds)
+  - [AES](#aes)
+    - [AES breaking machine](#aes-breaking-machine)
+    - [Implementation of AES](#implementation-of-aes)
+  - [RSA](#rsa)
 
 ## Concepts
 
@@ -441,3 +453,130 @@ which involves the infrastructure, mechanical components, guards, etc...
 which are mainly used for performing logical separations and identifications of security incidents.
 
 Two main branches include software-based access control and cryptographic means.
+
+## Risk management
+
+The main goal of risk management is the exact implementation of a set of safeguards.
+
+## Symmetric cryptoalgorithms
+
+Secret key cryptoalgorithms or symmetric cryptoalgorithms are methods where the same secret key is used both for ciphering and deciphering. They are considered practically secure if they satisfy both conditions:
+
+- the key is at least 128bits long
+- there aren't any known effectice cryptoanalytic methods
+
+### Role of symmetric keys
+
+Keys should always be generated separately: they are not created by encryption or decryption algorithms. Key lengths are determines by the algorithms of key generation themselves. Finally, any bit sequence of predefined length can be considered as a cryptographic key.
+
+> The minimal keylength should be at least 128bits (16bytes) to counter exhaustive search methods.
+
+### Fields of use of symmetric cryptoalgorithms
+
+- Transmission of confidential information using unsafe networks
+- Secure storage of confidential data
+- Secure erasing of data (rewrites)
+- Creation of secure key materials for cryptographic use
+
+### Major symmetric cryptoalgorithms
+
+The DES key generation algorithm is considered insecure due to its keylength being only 56bits. 3DES or triple mode DES was used until 2005.
+
+AES is still considered an excellent algorithm for mainstream use since it won the 2001 NIST commercial symmetric cryptoalgorithms competition. It is still a _de facto_ standard and it is estimated that 80%-85% of symmetric cryptoalgorithm usage involves AES. Common keylengths are 128, 192 and 256bits.
+
+IDEA (128bits) originated in the late 1080s in Switzerland. FOX and IDEA NXT were published in 2003 with keylengths ranging from 0 to 256bits.
+
+Blowfish with a variable keylength of up to 448bits was made by Bruce Schneider in the 1990s.
+
+RC4 is a stream cipher with a keylength between 40 and 256bits and was created in 1987. It is considered too weak for modern use however.
+
+### Block and stream ciphers
+
+Symmetric cryptoalgorithms can be divided into block and stream ciphers, with the former being more widespread than the latter.
+
+#### Block ciphers <!-- omit in toc -->
+
+Block ciphers are used in methods where plaintext is divided into blocks of certain length and these block are encrypted separately.
+
+Popular modes include:
+
+- electronic codebook mode: ECM
+- cipher block chaining mode: CBC
+- K-bit cipher feedback mode: CFB
+- K-bit output feedback mode: OFB
+
+Cipher and output feedback modes are used in situations where some form of feedback needs to be organised.
+
+##### ECM <!-- omit in toc -->
+
+Plainext blocks are encrypted independently from each other using the same secret key. The disadvantage is that each ciphertext block depends on only one plaintext block, which can cause repeats in ciphertext.
+
+##### CBC <!-- omit in toc -->
+
+Before encrypting subsequent blocks, the result of the previous block is XORed with the plaintext. As an advantage, one block of ciphertext depends on all previous plaintext: there will be no repeats in ciphertext.
+
+##### CFB <!-- omit in toc -->
+
+The feedback loop involves both block ciphers and XORing.
+
+##### OFB <!-- omit in toc -->
+
+The feedback loop involves only the cipher block which recursively originates from a certain value, using the initial key.
+
+#### Stream ciphers <!-- omit in toc -->
+
+Stream ciphers are used in methods where a key sequence is generated from a given secret key, and a traditional XOR process is used to cipher all of the plaintext.
+
+#### Usage of different block cipher modes <!-- omit in toc -->
+
+ECMs are the most convenient, albeit not secure enough modes to encrypt long plaintexts, therefore the most used method is the CBC mode.  
+Feedback modes are less frequently used but allow the usage of block ciphers as stream ciphers in order to produce key sequences, and are therefore mainly used for secure erasing of data.
+
+### Inner structure of block ciphers
+
+Block ciphers usually involve numerous transformations of plaintext called **rounds**, where the output of a previous round is the input for the next one. The way different rounds use keys is determined by a **key sequence algorithm**. In case such an algorithm is missing, the original key gets used, however, if it does exist, the **round keys** are computed from the initial key.
+
+#### Parameters of typical block ciphers <!-- omit in toc -->
+
+- length of a key
+- length of a block
+- number of rounds
+- presence (or absence) of a key sequence algorithm
+- number of round keys
+- length of round keys
+
+#### Main basic operations inside rounds
+
+- substitution - replacing of original characters by other ones
+- transposition / permutation - changing the order of characters
+
+Most transformations within a block are comprised of a combination of the two basic operations.
+
+### AES
+
+DES is a block cipher with a block length of 64bits and key length of 56bits. It was internationally standardised and made available form FIPS PUB 46-s, however, it was already weakening by the end of the 1990s due to the short keylength. A competition for a new standard was launched, and thus AES was created.
+
+AES must be a block cipher with a block length of at least 128bits and having 3 different possible keylengths: 128, 192 and 256bits. In AES, they key length and the block length are the same. For a 128bit key, 10 rounds are involved, 12 rounds for 192bit keys and 14 rounds for 256bit keys. It is noteworthy that there is no key sequence algorithm used.
+
+Each round consists of four subsequent different type of transformations:
+
+- byte subs
+- row shifts
+- column mixes
+- round key adding
+
+#### Cryptanalysis of AES <!-- omit in toc -->
+
+An exhaustive search would need to perform from 2^128 to 2^256 operations, which is practically infeasible. Moreover, no effective cryptanalysis methods are currently known to break AES encryption, making it practically secure.
+
+However, in 2002, the surfacing of algebraic cryptanalysis did offer a way to potentially break 128bit AES with only 2^87 operations. However, in practice, algebraic cryptanalysis has not been yet implemented. Moreover, **related key attacks** where different mathematically related keys are used to brute force the algorithm, have also been conceived in theory only. Lastly, a theoretical **side channel attack** that is based on getting internal information from within the block has been conceived, but again, not implemented in practice.
+
+#### AES breaking machine
+
+A _breaking machine_ is a parallel computer that performes exhaustive searches where different key intervals are searched simultaneously with different chips. Such machine would break DES within one second, but would currently take thousands of millions of years to break AES. Moreover, such machines cost north of fifty thousand euros. Therefore, all three versions of AES are likely to remain practically secure for many more years.
+
+#### Implementation of AES
+
+AES can be realised both by software and hardware, however hardware computings are up to a few hundred times faster depending on the chips and programming languages used.
+
+### RSA
