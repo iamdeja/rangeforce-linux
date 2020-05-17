@@ -63,7 +63,14 @@
   - [AES](#aes)
     - [AES breaking machine](#aes-breaking-machine)
     - [Implementation of AES](#implementation-of-aes)
+- [Asymmetric cryptoalgorithms](#asymmetric-cryptoalgorithms)
   - [RSA](#rsa)
+    - [Mathematical background of RSA](#mathematical-background-of-rsa)
+    - [RSA key-pair generation](#rsa-key-pair-generation)
+    - [RSA ciphering](#rsa-ciphering)
+    - [Main concepts of RSA](#main-concepts-of-rsa)
+    - [Cryptanalysis of RSA](#cryptanalysis-of-rsa)
+  - [Other asymmetric algorithms](#other-asymmetric-algorithms)
 
 ## Concepts
 
@@ -579,4 +586,63 @@ A _breaking machine_ is a parallel computer that performes exhaustive searches w
 
 AES can be realised both by software and hardware, however hardware computings are up to a few hundred times faster depending on the chips and programming languages used.
 
+## Asymmetric cryptoalgorithms
+
+Asymmetric or public-key cryptoalgorithms make use of two keys: one key is used for encryption, and the other for decryption. The same key cannot be used for both tasks. These keys are generated using algorithms that matemathically link them together in a way that it is practically impossible to derive one from the other. These keys are called public and private key.
+
+The public key is usually known for all parties involved in the exchange, and can be made available to the public. A private key should however only be known to the author or owner of a key-pair.
+
+Asymmetric algorithms are often used for key-exchange purposes, as they allow to exchange symmetric keys in a secure and encrypted manner. They are also used to sensure integrity of data, and lay the foundation to digital signature technologies.
+
+As opposed to symmetric keys, arbitrary bitstreams cannot be consered valid keys, and therefore a special key generation algorithm is always required. However, such algorithms induce some form of information redundancy, therefore causing the need for significantly longer keys than symmetric ones to ensure practical security.
+
 ### RSA
+
+RSA is the most widespread public-key cryptoalgorithm in the world today. It is considered practically secure for key-lengths no less than 2048 bits. For RSA, computing the public key from the private key is fairly easy, however it is practically infeasible to extract the private key from the public key. The security of RSA is guaranteed by the difficulty in factorising large numbers, solving the discrete logarithm problem.
+
+RSA supports arbitrary keylengths, however the most widespread keys come in powers of 2 such as 2048, 4096, .... Keys less than 2048bit ones are however already considered to be weak.
+
+#### Mathematical background of RSA
+
+An algorithm is called of polynomial complexity if for a task of length _N_, the solution time is _N^k_ proportional with some fixed integer _k_. Polynomial algorithms are generally considered to be good algorithms since as _N_ increases, the solution time is not growing very fast.
+
+Exponential complexity algorithms induce much worse solving times, as for a task of length _N_, the solution time is proportional to the value of _2^N_.
+
+Non polynomial algorithms are considered practically unsolvable, which may either be good or bad, depending on usage case.
+
+> Discrete logarithm problem: _find g, given a, n, p in a = g^n (mod p)_
+
+Edmond's Postulate: an algorithm is considered to be good if its time complexity can be represented by a polynomial _O(n^k)_ from an input, with _k_ some integer. Polynomials are closed under addition and multiplication, in other words, the sum and/or product of polynomials is always a polynomial.
+
+> Closure of polynomials: O(n^k) + O (n') = O(n^[max{k,l}]) | O(n^k) \* O(n') = O(n^[k+l])
+
+#### RSA key-pair generation
+
+Two large primes _p_ and _q_ are generated. Their product, the RSA module, is generated: _n = p \* q_. Then, _e_ is chosen in a way that it is relatively prime to _(p-1)(q-1)_. Finally, _d_ is chosen such that _d \* e = 1 mod (p-1)(q-1)_.
+
+The pair _(n, e)_ is the public key, and the triple _(p, q, d)_ is the private key.
+
+#### RSA ciphering
+
+It is possible to encipher texts that are less than _pq_ bits. The enciphering process includes a discrete exponent: _Y = Cip(X) = X^d mod n_. Likewise for deciphering: _X = Decip(Y) = Y^e mod n_ since _(X^d)^e = X mod n_.
+
+#### Main concepts of RSA
+
+Without having a private key, a plaintext cannot be encrypted in a way that it is decipherable using a public key. Furthermore, a message encrypted with a public key cannot be decrypted using the public key again.
+
+Conceptually, _e_ is a public exponent and _d_ is a secret exponent. Functions for which an inverse cannot feasibly be found are called _one-way functions_. If however, the inverse can be found with some minimal additional information, the function is called _trapdoor one way function_. RSA is an example of a trapdoor one-way function.
+
+#### Cryptanalysis of RSA
+
+Factorisation of 70 digit numbers take only a few minutes for average personal computers. In general, 100 digit numbers can still be factored at home in less than a day.
+
+In 1996, the factorisation of a 140 digit number took 5 years and required a joint computational effort of many computers. To date, the largest factored number (2009) was 232 digits long.
+
+A 300 digit number (1024bit RSA) would take millions of years using current classical computing methods and hardware.
+
+### Other asymmetric algorithms
+
+- elliptic curve based algorithms (P-384 or ED25519)
+- El-Gamal
+- DSS
+- Paillier' system
