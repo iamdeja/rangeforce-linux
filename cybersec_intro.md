@@ -71,6 +71,21 @@
     - [Main concepts of RSA](#main-concepts-of-rsa)
     - [Cryptanalysis of RSA](#cryptanalysis-of-rsa)
   - [Other asymmetric algorithms](#other-asymmetric-algorithms)
+- [Hash functions and cryptoprotocols](#hash-functions-and-cryptoprotocols)
+  - [Old-type hashes](#old-type-hashes)
+  - [Mandatory properties of hash functions](#mandatory-properties-of-hash-functions)
+  - [Birthday paradox](#birthday-paradox)
+  - [Secure hash functions](#secure-hash-functions)
+  - [Insecure hash functions](#insecure-hash-functions)
+    - [MD5](#md5)
+    - [SHA-1 <!-- exclude in toc -->](#sha-1)
+  - [SHA-256 and SHA-3](#sha-256-and-sha-3)
+  - [Message authentication codes](#message-authentication-codes)
+  - [Cryptoprotocols](#cryptoprotocols)
+  - [TLS](#tls)
+    - [TLS handshake](#tls-handshake)
+    - [TLS security](#tls-security)
+  - [Other cryptoprotocols](#other-cryptoprotocols)
 
 ## Concepts
 
@@ -646,3 +661,130 @@ A 300 digit number (1024bit RSA) would take millions of years using current clas
 - El-Gamal
 - DSS
 - Paillier' system
+
+## Hash functions and cryptoprotocols
+
+RSA, due to its relative slowness, is unsuitable for integrity purposes on its own (1000x slower compared to symmetric ones). Instead, cryptographic hashes are used.
+
+A cryptographic hash or cryptographic message digest, but also called fingerprint or thumbprint is a digest with a fixed length which is computed from an arbitrary-length message using a one-way function.
+
+In usage, if for a given message-hash pair, the hash corresponds to the one generated from the message (using the same known algorithm), we can be sure (with great probability) that the hash has originated from that message, and from nowhere else.
+
+### Old-type hashes
+
+Old-type cryptographic hashes were computed using a commpression function, which is one way and guarantees a fixed-length output from a longer fixed length input. It was iteratively used on data blocks.
+
+### Mandatory properties of hash functions
+
+- any change, no matter how minor, must cause a full change of the hash
+- hashes must be easily computable
+- hash functions must be one way
+- hashes must be resistant to second preimage attacks
+- hashes must be collision-free (statistically)
+- compression functions used must also be collision free (pseudo-collision free)
+
+### Birthday paradox
+
+The probability that for _N_ people the birthdays of two different people coincide will grow proportionally to _N^2_.
+
+As a conclusion, if the output of a hash is _N_ bit long, then the probability that _K_ trials will give two identical hashes is _K = 1.17 \* 2^(N/2)_.
+
+The simplest cryptanalytic attack (exhaustive search for hash functions) of a _N_-bit hash function needs to iterate over _2^(N/2)_ options.
+
+### Secure hash functions
+
+- SHA-2 (SHA-256): constructed on the basis of MD4 in 2001, and of a length 256bits (32bytes)
+- SHA-3 (256 / 32, 384 / 48, 512bits / 64bytes): constructed in 2010 to resist newer hash attacks
+
+### Insecure hash functions
+
+- MD family: hash lengths of 128bits (16bytes) are vulnerable to collisions and exploits
+- SHA-1: hash length of 160bits (20bytes) isn't completely broken yet, but is deemed too weak for practical use
+
+#### MD5 <!-- exclude in toc -->
+
+Consists of 4 different rounds which process a message by 512bit portions. During each round, the result of the previous round is mixed with the following 512bits.
+
+In 2005, signatures based on MD5 were reliably practically broken. In 2017, collisions can be found by exhaustive search with the amount of _2^24,1_ within a minute.
+
+#### SHA-1 <!-- exclude in toc -->
+
+A structurally similar algorithm to MD5 however with a longer length. Collisions can be easily found in theory, however the collisions do not allow to reverse the hash itself. In 2012, it was estimated that a hash breaking would cost \$1mln. The first actual collision was found in 2017.
+
+SHA-1 is allowed for usage in emergency situations in high stakes protocols with the following clauses:
+
+- key-strengthening mode: the usage of the function twice in a row
+- salting: appending of a random bitstream to the source, which protects against dictionary attacks
+
+### SHA-256 and SHA-3
+
+The SHA-256, based on MD5 structurally, is the current de facto standard in commercial cryptography.
+
+In 2006, SHA-3 was created for the NIST hash competition. The runner-up to Keccak (SHA-3) was BLAKE. Later, BLAKE2 was developed, it being considerably faster than all previous hash functions.
+
+#### Sponge structure of SHA-3 <!-- omit in toc -->
+
+A sponge structure is a two-step action:
+
+- absorbing: a large array of which the initial part is changed step by step with bits of material to be hashed with a compression function
+- squeezing: conversions are made within the array with the compresssion function and the hash is "read out" between conversions.
+
+### Message authentication codes
+
+Message authentication codes or MACs are hash functions with a key assigned: computing and verifying of a hash needs a secret key on top of the message. It differs from public-key cryptoalgorithms by the fact that both the computing and verifying process can be performed by the same key.
+
+### Cryptoprotocols
+
+A protocol determines which information moves between subjects and who, how, when transforms it.
+
+A cryptoprotocol is a protocol where the transformations include different cryptoalgorithms and/or key geneartions.
+
+The most widespread cryptoprotocol (on the Internet) is TLS, Transport Layer Security.
+
+### TLS
+
+TLS is constructed to be used in conjunction with TCP/IP protocols. It enables authentication of parties in the network. It is also included in higher level protocols, enabling:
+
+- ssh instead of telnet
+- https instead of http
+- ftps instead of ftp
+
+#### TLS channel <!-- omit in toc -->
+
+TLS establishes a secure channel over a network, having the following properties:
+
+- the channel is private: all transferred data is encrypted after the initial key exchange
+- the channel is authenticated
+- the successful receiving of all packages can be checked
+
+#### Main principles of TLS <!-- omit in toc -->
+
+TLS connections are comprised of two phases:
+
+- handshaking phase
+- message transfering phase
+
+The connection must be established between two unequal parties: client and server. The server authentication is mandatory, while authentication of a client is voluntary.
+
+#### TLS handshake
+
+The client notified the server of their wish to connect, and provides information about the available cryptoalgorithms. It sends a generated **nonse** to the server and demands the server authenticates itself.
+
+The server then generates a message claiming its origin, appends to it the nonse, hashes the package and signs the hash. It then sends to the client its certificate (public key), the message and the signed hash.  
+The client can verify the signature to identify the server, and then store the server's public key. The client has now authenticated the server.
+
+The client now encrypts a symmetric key with the server's public key and sends it to the server. The server deciphers this symmetric key with its private key, and the shared key can be used to exchange further data.
+
+#### TLS security
+
+TLS is a successor to SSL (secure socket layer) and improves many of its flaws. However, it still has weaknesses.
+
+The major concern is the impresonation of the server by a malicious agent. The handshake can still be carried out, and the client will assume a legitimate connection was established. This is why certificates need to be used on top of TLS.
+
+### Other cryptoprotocols
+
+- DNSSEC: Domain Name Security Extensions
+- IEEE 802.11: wireless local area protocol
+- IPSec
+- S/MIME: secure MIME
+- SSH: secure shell
