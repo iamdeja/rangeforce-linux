@@ -77,7 +77,7 @@
   - [Birthday paradox](#birthday-paradox)
   - [Secure hash functions](#secure-hash-functions)
   - [Insecure hash functions](#insecure-hash-functions)
-    - [MD5](#md5)
+    - [MD5 <!-- exclude in toc -->](#md5)
     - [SHA-1 <!-- exclude in toc -->](#sha-1)
   - [SHA-256 and SHA-3](#sha-256-and-sha-3)
   - [Message authentication codes](#message-authentication-codes)
@@ -86,6 +86,12 @@
     - [TLS handshake](#tls-handshake)
     - [TLS security](#tls-security)
   - [Other cryptoprotocols](#other-cryptoprotocols)
+- [Electronic signatures](#electronic-signatures)
+  - [Time stamps](#time-stamps)
+  - [Validity of approval](#validity-of-approval)
+  - [Certification infrastructure](#certification-infrastructure)
+  - [Data format](#data-format)
+  - [EU electronic signature regulations](#eu-electronic-signature-regulations)
 
 ## Concepts
 
@@ -788,3 +794,35 @@ The major concern is the impresonation of the server by a malicious agent. The h
 - IPSec
 - S/MIME: secure MIME
 - SSH: secure shell
+
+## Electronic signatures
+
+### Time stamps
+
+A time stamp is a data set that is added to some other original data. They are issued by time-stamp authorities and give the possibility to provably compare the creation time of different datasets.
+
+The timestamps are calculated from the hash of the data and the previously issued timestamp.
+
+### Validity of approval
+
+The validity of approval is established by a query to a certification authority, which is made immediately after giving a signature. A digital proof is then also added to a document that the signature was valid at the time of signing.
+
+Such embedded proofs guarantee verification capabilities even in case online connections cannot be established, however, a valid signing process will always require an online connection.
+
+### Certification infrastructure
+
+Public key infrastructure consists of the following mandatory components:
+
+- non reverse-engineerable hardware-based public-key container
+- certification authority (CA)
+- validity of approval service (at CA)
+- time-stamping authority
+- organisation and coordination of services
+
+### Data format
+
+As digital signature are bound to bitstreams, digital documents that are signed should carry meaning. Therefore, for signing, only data formats carrying unique meaning and with a publicly available description should be used, unless for a specialised application.
+
+### EU electronic signature regulations
+
+EU Regulation 910/2014 "On electronic identification and trust services for electronic transactions in the internal market" (eIDAS) is in place.
