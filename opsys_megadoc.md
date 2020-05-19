@@ -23,7 +23,7 @@ An introductory course on the basics of how operating systems work, and how to m
   - [RAID](#raid)
 - [Windows Update - categories](#windows-update---categories)
   - [LTSC](#ltsc)
-- [GNU/Linux](#gnulinux)
+- [GNU/Linux (Ubuntu)](#gnulinux-ubuntu)
   - [Linux networking](#linux-networking)
 
 ## Virtual machines
@@ -409,9 +409,19 @@ Service packs may contain new features and customer requested features.
 
 Long Term Stable Channel versions of Windows are destined for usage in areas needing a reliable backbone, such as servers. LTSC versions only get security and other critical upgrades, but no feature updates.
 
-## GNU/Linux
+## GNU/Linux (Ubuntu)
+
+The best way to get started with the basics of GNU/Linux is using the arguably most popular distribution: Ubuntu, based on Debian.
 
 ### Linux networking
+
+While in the past, Ubuntu made primarily use of `ifconfig`, the modern way since Bionic Beaver is the `ip` utility. When it comes to network management, `netplan` is the main network manager of Debian based systems, and it uses one of two renderers: `networkd` and `NetworkManager`.
+
+Netplan configuration files can be found inside `/etc/netplan` in `yaml` format. Once changes are made to the configuration files, `netplan` must be reloaded using
+
+```shell
+netplan apply
+```
 
 #### UFW firewall basics <!-- omit in toc -->
 
@@ -451,6 +461,12 @@ To remove rules (by number), use
 
 ```shell
 ufw delete <number>
+```
+
+To reset the firewall, use
+
+```shell
+ufw reset
 ```
 
 For information on how to construct firewall rules, use
