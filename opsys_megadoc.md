@@ -17,12 +17,11 @@ An introductory course on the basics of how operating systems work, and how to m
   - [Disk quotas and file permissions](#disk-quotas-and-file-permissions)
   - [User account control](#user-account-control)
   - [Windows users addendum](#windows-users-addendum)
+  - [Windows update categories](#windows-update-categories)
 - [Disk management](#disk-management)
   - [NTFS](#ntfs)
   - [Global Unique IDentifier Partition Table (GUID, GPT)](#global-unique-identifier-partition-table-guid-gpt)
   - [RAID](#raid)
-- [Windows Update - categories](#windows-update---categories)
-  - [LTSC](#ltsc)
 - [GNU/Linux (Ubuntu)](#gnulinux-ubuntu)
   - [Linux networking](#linux-networking)
 
@@ -267,6 +266,28 @@ Command to run commands as someone else:
 runas /user:username[@domain]
 ```
 
+### Windows update categories
+
+There are various different types as well as different rules on how to download and apply them:
+
+- critical update: serious non-security related bug fixes
+- security updated: fixes security vulnerabilities
+  - critical: vulnerabilities whose exploitation can cause system infection without user action
+  - important: vulnerabilities that can compromise integrity or confidentiality of data or the system itself
+  - low
+  - moderate
+  - unspecified
+- service pack & update rollup: cumulative set of hotfixes, security, critical and various updates
+
+Service packs may contain new features and customer requested features.
+
+- definition updates: additions to product definition databases
+- feature pack: new product functionalities
+
+#### LTSC <!-- omit in toc -->
+
+Long Term Stable Channel versions of Windows are destined for usage in areas needing a reliable backbone, such as servers. LTSC versions only get security and other critical upgrades, but no feature updates.
+
 ## Disk management
 
 Partitions are logical divisions on a disk. They can be used to shield parts of the system (mounting and umounting), run multiple operating systems in parallel, and have different filesystems / shared drives.
@@ -386,28 +407,6 @@ It has two redundancy disks, and using different algorithms.
 #### Nested raids <!-- omit in toc -->
 
 Usually Raid10 or Raid01, giving you both speed and redundancy.
-
-## Windows Update - categories
-
-There are various different types as well as different rules on how to download and apply them:
-
-- critical update: serious non-security related bug fixes
-- security updated: fixes security vulnerabilities
-  - critical: vulnerabilities whose exploitation can cause system infection without user action
-  - important: vulnerabilities that can compromise integrity or confidentiality of data or the system itself
-  - low
-  - moderate
-  - unspecified
-- service pack & update rollup: cumulative set of hotfixes, security, critical and various updates
-
-Service packs may contain new features and customer requested features.
-
-- definition updates: additions to product definition databases
-- feature pack: new product functionalities
-
-### LTSC
-
-Long Term Stable Channel versions of Windows are destined for usage in areas needing a reliable backbone, such as servers. LTSC versions only get security and other critical upgrades, but no feature updates.
 
 ## GNU/Linux (Ubuntu)
 
