@@ -1,6 +1,6 @@
 # Operating Systems Management <!-- omit in toc -->
 
-An introductory course on the basics of how operating systems work, and how to manage users on Windows and GNU / Linux systems from both GUI and CLI.
+An introductory course on the basics of how operating systems work, and how to manage users on Windows and GNU/Linux systems from both GUI and CLI.
 
 > Note: _PDF version may be out of date._
 
@@ -23,6 +23,8 @@ An introductory course on the basics of how operating systems work, and how to m
   - [RAID](#raid)
 - [Windows Update - categories](#windows-update---categories)
   - [LTSC](#ltsc)
+- [GNU/Linux](#gnulinux)
+  - [Linux networking](#linux-networking)
 
 ## Virtual machines
 
@@ -406,3 +408,53 @@ Service packs may contain new features and customer requested features.
 ### LTSC
 
 Long Term Stable Channel versions of Windows are destined for usage in areas needing a reliable backbone, such as servers. LTSC versions only get security and other critical upgrades, but no feature updates.
+
+## GNU/Linux
+
+### Linux networking
+
+#### UFW firewall basics <!-- omit in toc -->
+
+The `ufw` Linux utility stands for _"uncomplicated firewall"_ and is the default firewall for Debian based systems. However, by default, it is also deactivated.
+
+To activate, deactivate or reload the firewall
+
+```shell
+ufw {enable|disable|reload}
+```
+
+To check the firewall status
+
+```shell
+ufw status [verbose|numbered]
+```
+
+where `verbose` provides additional details/information, and `numbered` displays rule numbers.
+
+To enable logging and assign the level, use
+
+```shell
+ufw logging {on|off|LEVEL}
+```
+
+with the following levels: `low`, `medium`, `high`, `full`.
+
+Running `ufw` with the `--dry-run` option sandboxes the changes: they will be displayed, but the configuration won't be altered.
+
+Rules themselves can be added with the following syntax
+
+```shell
+ufw {allow|deny}
+```
+
+To remove rules (by number), use
+
+```shell
+ufw delete <number>
+```
+
+For information on how to construct firewall rules, use
+
+```shell
+man ufw
+```
