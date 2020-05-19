@@ -18,11 +18,14 @@ An introductory course on the basics of how operating systems work, and how to m
   - [User account control](#user-account-control)
   - [Windows users addendum](#windows-users-addendum)
   - [Windows update categories](#windows-update-categories)
+  - [Windows backup and restore](#windows-backup-and-restore)
 - [Disk management](#disk-management)
   - [NTFS](#ntfs)
   - [Global Unique IDentifier Partition Table (GUID, GPT)](#global-unique-identifier-partition-table-guid-gpt)
   - [RAID](#raid)
 - [GNU/Linux (Ubuntu)](#gnulinux-ubuntu)
+  - [Filesystem](#filesystem)
+  - [Methods of software distribution](#methods-of-software-distribution)
   - [Linux networking](#linux-networking)
 
 ## Virtual machines
@@ -288,6 +291,23 @@ Service packs may contain new features and customer requested features.
 
 Long Term Stable Channel versions of Windows are destined for usage in areas needing a reliable backbone, such as servers. LTSC versions only get security and other critical upgrades, but no feature updates.
 
+### Windows backup and restore
+
+Windows takes _restore points_ automatically, provided the feature is enabled, whenever major changes take place in the system. These are changes such as installation of new programs, downloading of major windows updates, installations of new drivers, .... Additionally, a user can choose to create a restore point manually. This functionality can set up and managed under _System Properties and System Protection_.
+
+More generally, Windows systems have a layered approach of backups and restoring depending on the severity of the incident.
+
+1. File History
+2. Restore points
+3. Full system updates (installs over older versions)
+4. Restoring from full system images
+5. Refreshing the PC
+6. Resetting the PC
+
+Restore points are self-contained recovery tools (for systems with over 128GB of storage space) which can be used to repair the bootloader in case Windows will no longer boot.
+
+As of Windows 10, the recommended / main options are File History, PC refresh, PC reset.
+
 ## Disk management
 
 Partitions are logical divisions on a disk. They can be used to shield parts of the system (mounting and umounting), run multiple operating systems in parallel, and have different filesystems / shared drives.
@@ -411,6 +431,71 @@ Usually Raid10 or Raid01, giving you both speed and redundancy.
 ## GNU/Linux (Ubuntu)
 
 The best way to get started with the basics of GNU/Linux is using the arguably most popular distribution: Ubuntu, based on Debian.
+
+### Filesystem
+
+- `/` - root
+- `/bin` - executable files for 'single-user' mode
+- `/boot` - bootloader
+- `/dev` - interfaces for device drivers
+- `/etc` - configuration files not belonging to a specific user
+- `/home` - user-specific data
+- `/lib` - libraries required by binary files in `/bin` and `/sbin`
+- `/media` - mounting point for removable media
+- `/mnt` - temporarily mounted filesystems
+- `/opt` - third-party software ('optional')
+- `/root` - administrator folder, executable files for single-user mode
+- `/sbin` - system binaries
+- `/srv` - data served by the system (FSH), server files
+- `/tmp` - temporary files writeable by any user
+- `/usr` - installed packages, documentation, source codes, ...
+- `/var` - variables, runtime information, caches, ...
+
+### Methods of software distribution
+
+#### Access <!-- omit in toc -->
+
+Software can be distributed from independent and standalone sources / repositories (centralised storages).
+
+#### Binary packages <!-- omit in toc -->
+
+- Packaged programs in different formats, such as `.exe`, `.rpm`, `.dev`, ...
+- Byte code, such as `.jar` for Java or `.pyc` for Python
+
+#### Sources <!-- omit in toc -->
+
+- Scripts for interpreted languages such as Python, PHP, etc
+- Source code for compilation into binary machine code
+
+#### Libraries and versioning problems <!-- omit in toc -->
+
+Most software packages rely on external libraries, commonly used code packages present in the system. The names of processes or software locations are independent of the software version.  
+The operating system may run in a situation where packages require different versions of the same library. In other words, some necessary updates for one program may break another.
+
+#### Software management systems <!-- omit in toc -->
+
+Software management systems must be capable of finding and installing dependencies and requesting elevated privileges if required. They must integrate search mechanisms. They must also give information about the content of software packages, what files they contain as well as validate installed software and provide its authenticity.  
+For portability, they must create reports of installed software so that the full set can be cloned onto another system.
+
+#### Software distribution <!-- omit in toc -->
+
+The preferable software installation method is using software repositories. Alternatively, software can be installed from binary packages using the same mechanisms and software management systems, or compared by the user themself.
+
+Debian systems use the `apt` package manager and `apt install` syntax.
+
+#### Software sources location <!-- omit in toc -->
+
+Operating systems come with a set of internet addresses used for updated and installation of software. Other sources can be added later.  
+In Debian based systems, the apt sources are located under `/etc/apt/sources.list`.
+
+Before updating packages, the list of sources and package versions must be refreshed using `apt update`.
+
+#### apt commands <!-- omit in toc -->
+
+- `apt update` shows the intended list of updates
+- `apt upgrade` updates the software
+- `apt dist-upgrade` provides conflict management
+- `do-release-upgrade` will update the OS to the newest version
 
 ### Linux networking
 
